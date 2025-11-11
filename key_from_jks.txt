@@ -1,0 +1,15 @@
+# 1. List aliases
+keytool -list -v -keystore mykeystore.jks
+
+# 2. Export chosen alias to PKCS12
+keytool -importkeystore \
+  -srckeystore mykeystore.jks \
+  -destkeystore keystore.p12 \
+  -deststoretype PKCS12 \
+  -srcalias myalias
+
+# 3. Extract private key (PEM, unencrypted)
+openssl pkcs12 -in keystore.p12 -nocerts -nodes -out myalias.key
+
+# 4. Extract cert
+openssl pkcs12 -in keystore.p12 -nokeys -out myalias.crt
